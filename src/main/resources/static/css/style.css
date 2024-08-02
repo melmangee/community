@@ -1,1 +1,9 @@
 @charset "UTF-8";
+
+.photo {min-height: 800px;}
+header {height:100px;}
+.contents {min-height:700px;}
+
+.sign-up-box {
+	width:600px;
+	background-color: #f1f1f1;}

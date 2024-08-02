@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center align-items-center">
+	<div id="findIdPw">
+		<div class="pb-5">
+			<h4>아이디 찾기</h4>
+			<div class="d-flex">
+				<input type="text" id="findId" class="form-control col-9" placeholder="이메일 주소를 입력하세요.">		
+				<button type="button" id="loginIdFindBtn" class="btn btn-primary ml-2">찾기</button><br>
+			</div>
+				<!-- 이메일 체크 결과 -->
+				<div id="emailCheckLength" class="small text-danger d-none">이메일을 입력해주세요.</div>
+				<div id="emailCheckDuplicated" class="small text-danger d-none">이메일을 찾을수 없습니다.</div>
+		</div>
+		<div class="pt-5">
+			<h4>비밀번호 찾기</h4>
+			<div class="d-flex">
+				<input type="text" id="findPw" class="form-control col-9" placeholder="아이디를 입력하세요.">		
+				<button type="button" id="loginPwFindBtn" class="btn btn-primary ml-2">찾기</button><br>
+			</div>
+			<!-- 아이디 체크 결과 -->
+			<div id="idCheckLength" class="small text-danger d-none">아이디를 입력해주세요.</div>
+			<div id="idCheckDuplicated" class="small text-danger d-none">아이디를 찾을수 없습니다.</div>
+		</div>
+		
+		<a class="btn btn-block btn-dark mt-5" href="/user/sign-in-view">로그인</a>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>

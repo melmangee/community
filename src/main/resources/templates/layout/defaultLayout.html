@@ -3,22 +3,25 @@
 	  	lang="ko"
       	xmlns:th="http://www.thymeleaf.org"
       	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
-		<!-- head config -->
-		<th:block th:replace="fragments/config :: configFragment"></th:block>
-
+   
+   		<!-- head config -->
+   		<th:block th:replace="fragments/config :: configFragment"></th:block>
 	<body>
 		<div id="wrap" class="d-flex">
-				<div>
-					<!-- photo -->
-				</div>
-				<div>
-					<!-- header -->
-					
-					<!-- content -->
-					
-					<!-- script -->					
-				</div>											
+			
+			<!-- image config -->
+			<div th:replace="fragments/image :: imageFragment"></div>
+			
+			<div class="w-50">
+				<!-- header config -->
+				<header th:replace="fragments/header :: headerFragment"></header>
+				
+				<!-- content config -->
+				 <section layout:fragment="content" class="contents"></section>
+				 
+				 <!-- script -->
+				 <th:block layout:fragment="script"></th:block>
+			</div>
 		</div>	
 	</body>
 </html>
