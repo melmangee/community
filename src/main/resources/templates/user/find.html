@@ -28,10 +28,30 @@
 		
 		<a class="btn btn-block btn-dark mt-5" href="/user/sign-in-view">로그인</a>
 	</div>
-</section>
-
+</section>	
 <th:block layout:fragment="script">
     <script>
-
+		$(document).ready(function(){
+			// 아이디 찾기
+			$("#loginIdFindBtn").on('click', function() {
+				$("#emailCheckLength").addClass("d-none");
+				$("#emailCheckDuplicated").addClass("d-none");
+				
+				//alert("클릭");
+				let findId = $("#findId").val().trim();
+				//console.log(findId);
+				
+				if (!findId) {
+					$("#emailCheckLength").removeClass("d-none");
+					return;
+				}
+				
+				$.ajax({
+					
+				});
+				
+			}); // 아이디 찾기 끝
+		
+		}); // ready 함수 끝
     </script>
 </th:block>

@@ -39,11 +39,12 @@
 					<td>
 						<div class="d-flex">
 							<input type="text" id="email" name="email" class="form-control col-9" placeholder="이메일을 입력하세요.">
-							<button type="button" id="loginIdCheckBtn" class="btn btn-primary ml-2">중복확인</button><br>
+							<button type="button" id="emailCheckBtn" class="btn btn-primary ml-2">중복확인</button><br>
 						</div>
 						
 						<!-- 이메일 체크 결과 -->
 						<div id="emailCheckLength" class="small text-danger d-none">이메일을 입력해주세요.</div>
+						<div id="emailform" class="small text-danger d-none">이메일 형식이 아닙니다.</div>
 						<div id="emailCheckDuplicated" class="small text-danger d-none">이미 사용중인 이메일입니다.</div>
 						<div id="emailCheckOk" class="small text-success d-none">사용 가능한 이메일 입니다.</div>
 					</td>
@@ -59,7 +60,172 @@
 
 <th:block layout:fragment="script">
 	<script>
-	
+		$(document).ready(function() {
+			// 아이디 중복확인
+			$("#loginIdCheckBtn").on('click',function() {
+				// 초기화
+				$("#idCheckLength").addClass("d-none");
+				$("#idCheckDuplicated").addClass("d-none");
+				$("#idCheckOk").addClass("d-none");			
+				//alert("중복확인");
+				let loginId = $("#loginId").val().trim();
+				//alert(loginId);
+				
+				// login Id가 없을경우
+				if (! loginId) {
+					$("#idCheckLength").removeClass("d-none");
+					return;
+				}
+				
+				// AJAX
+				$.ajax({
+					// request
+					type:"post"
+					, url:"/user/is-duplicated-id"
+					, data: {loginId : loginId}
+					// response
+					,success:function(data) {
+						if (data.is_duplicated_id == true) {  // 중복인 경우
+							$("#idCheckDuplicated").removeClass("d-none"); // 중복 메세지
+							
+						} else { // 중복이 아닌경우
+							$("#idCheckOk").removeClass("d-none"); // 정상 메세지
+						}
+					}
+					, error:function(e) {
+						alert("중복확인에 실패했습니다.");
+					}
+					
+				}); // AJAX 끝
+				
+			}); // id 중복확인 버튼 끝
+			
+			// 이메일 중복 확인
+			$("#emailCheckBtn").on('click',function() {
+				// 초기화
+				$("#emailCheckLength").addClass("d-none");
+				$("#emailform").addClass("d-none");
+				$("#emailCheckDuplicated").addClass("d-none");
+				$("#emailCheckOk").addClass("d-none");			
+				//alert("중복확인");
+				let email = $("#email").val().trim();
+				//alert(loginId);
+				
+				// 이메일이 없을경우
+				if (! email) {
+					$("#emailCheckLength").removeClass("d-none");
+					return;
+				}
+				
+				// 이메일 형식이 아닐경우
+				
+				let emailParts = email.split("@");
+				let oneParts = emailParts[0];
+				let twoParts = emailParts[1];
+				
+				// @가 없을 경우
+				if (email.includes("@") == false) {
+					$("#emailform").removeClass("d-none");
+					return;
+				}
+				
+				// @ 앞이 없을 경우
+				if (oneParts == "") {
+					$("#emailform").removeClass("d-none");
+					return;
+				// @ 뒤가 없을 경우
+				} else if (twoParts == "") { 
+					$("#emailform").removeClass("d-none");
+					return;
+				}
+				
+				
+				// AJAX
+				$.ajax({
+					// request
+					type:"post"
+					, url:"/user/is-duplicated-email"
+					, data: {email : email}
+					// response
+					,success:function(data) {
+						if (data.is_duplicated_email == true) {  // 중복인 경우
+							$("#emailCheckDuplicated").removeClass("d-none"); // 중복 메세지
+							
+						} else { // 중복이 아닌경우
+							$("#emailCheckOk").removeClass("d-none"); // 정상 메세지
+						}
+					}
+					, error:function(e) {
+						alert("중복확인에 실패했습니다.");
+					}
+					
+				}); // AJAX 끝
+				
+			}); // email 중복확인 버튼 끝
+			
+			// 회원가입
+			$("#signUpForm").on('submit', function(e) {
+				e.preventDefault();
+				//alert("test");
+			
+				let loginId = $("#loginId").val().trim();
+				let password = $("#password").val();
+				let confirmPassword = $("#confirmPassword").val();
+				let name = $("#name").val().trim();
+				let email = $("#email").val().trim();
+				
+				if (!loginId) {
+					alert("아이디를 입력하세요");
+					return false;
+				}
+				
+				if (!password || !confirmPassword) {
+					alert("비밀번호를 입력하세요");
+					return false;
+				}
+				
+				if (password != confirmPassword) {
+					alert("비밀번호가 일치하지 않습니다.");
+					return false;
+				}
+				
+				if (!name) {
+					alert("이름을 입력하세요");
+					return false;
+				}
+				
+				if (!email) {
+					alert("이메일을 입력하세요");
+					return false;
+				}
+				
+				// 사용가능 한지 확인
+				// #idCheckOk, #emailCheckOk d-none이 있을때 alert 창 뜨게 한다.
+				
+				if ($("#idCheckOk").hasClass("d-none") || $("#emailCheckOk").hasClass("d-none")) {
+					alert("중복확인을 해주세요");
+					return false;
+				}
+				
+				let url = $(this).attr("action");
+				//console.log(url);
+				
+				let params = $(this).serialize();
+				//console.log(params);
+				
+				$.post(url, params) 
+				.done(function(data) { 
+					if (data.code == 200) {
+						alert("회원가입을 성공적으로 완료했습니다.");
+						location.href = "/user/sign-in-view";
+					} else {
+						alert(data.error_message);
+					}
+				}); // AJAX 끝	
+				
+			}); // 회원가입 서브밋
+			
+		}); // ready 함수 끝
 	</script>
 </th:block>
 </html>

@@ -3,11 +3,17 @@
 	<header class="bg-dark" th:fragment="headerFragment">
 		<div class="h-100 d-flex align-items-center justify-content-between">	
 			<div></div>
+			<!-- 로고 -->
 			<div>
 				<a href="#"><img alt="이미지" src="#"></a>
 			</div>
-			<div>
-				<a href="#">로그인</a>
+			<!-- 로그인 -->
+			<div th:if="${session.userId != null}">
+				<span th:text="${session.userName} + '님 안녕하세요'"></span>
+				<a href="/user/sign-out">로그아웃</a>
+			</div>
+			<div th:unless="${session.userId != null}">
+				<a href="/user/sign-in-view">로그인</a>
 			</div>
 		</div>
 	</header>
