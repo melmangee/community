@@ -13,7 +13,6 @@
 			</div>
 				<!-- 이메일 체크 결과 -->
 				<div id="emailCheckLength" class="small text-danger d-none">이메일을 입력해주세요.</div>
-				<div id="emailCheckDuplicated" class="small text-danger d-none">이메일을 찾을수 없습니다.</div>
 		</div>
 		<div class="pt-5">
 			<h4>비밀번호 찾기</h4>
@@ -23,7 +22,6 @@
 			</div>
 			<!-- 아이디 체크 결과 -->
 			<div id="idCheckLength" class="small text-danger d-none">아이디를 입력해주세요.</div>
-			<div id="idCheckDuplicated" class="small text-danger d-none">아이디를 찾을수 없습니다.</div>
 		</div>
 		
 		<a class="btn btn-block btn-dark mt-5" href="/user/sign-in-view">로그인</a>
@@ -35,7 +33,6 @@
 			// 아이디 찾기
 			$("#loginIdFindBtn").on('click', function() {
 				$("#emailCheckLength").addClass("d-none");
-				$("#emailCheckDuplicated").addClass("d-none");
 				
 				//alert("클릭");
 				let findId = $("#findId").val().trim();
@@ -47,11 +44,57 @@
 				}
 				
 				$.ajax({
-					
-				});
+					type:"post"
+					, url:"/user/find-id"
+					, data: {"findId" : findId}
+					, success:function(data) {
+					if (data.code == 200) {
+						alert("회원님의 아이디는 " + data.result + " 입니다.");
+					} else {
+						alert(data.error_message);
+						}
+					}
+					, error:function(data) {
+						alert("아이디를 가져오는데 실패하였습니다.");
+				}
+				
+				}); // AJAX 끝
 				
 			}); // 아이디 찾기 끝
 		
+			// 비밀번호 찾기
+			$("#loginPwFindBtn").on('click', function() {
+				$("#idCheckLength").addClass("d-none");
+				//alert("클릭");
+				let findPw = $("#findPw").val();
+				//console.log(findPw);
+				
+				if (!findPw) {
+					$("#idCheckLength").removeClass("d-none");
+					return;
+				}
+				
+				// AJAX
+				$.ajax({
+					type:"post"
+					, url: "/user/find-pw"
+					, data: {"findPw" : findPw}
+					, success:function(data) {
+						if (data.code == 200) {
+							location.href="/user/replacePw";
+						} else {
+							alert(data.error_message);
+						}
+					}
+					, error:function(data) {
+						alert("비밀번호를 가져오지 못했습니다.");
+					}
+					
+				}); // AJAX 끝
+				
+			}); // 비밀번호 찾기 끝
+			
+			
 		}); // ready 함수 끝
     </script>
 </th:block>

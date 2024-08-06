@@ -38,7 +38,7 @@ public class UserBO {
 	
 	
 	/**
-	 * 로그인 이메일 조회 
+	 * 로그인 이메일 조회, 아이디 찾기
 	 * @param email
 	 * @return
 	 */

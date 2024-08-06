@@ -2,6 +2,7 @@ package com.community.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
@@ -53,4 +54,12 @@ public class UserController {
 		return "user/find";
 	}
 	
+	/**
+	 * 비밀번호 재설정
+	 * @return
+	 */
+	@GetMapping("/replacePw")
+	public String replacePw() {
+		return "user/replacePw";
+	}
 }

@@ -142,4 +142,51 @@ public class UserRestController {
 		
 	}
 	
+	/**
+	 * 아이디 찾기 API
+	 * @param findId
+	 * @return
+	 */
+	@PostMapping("/find-id")
+	public Map<String, Object> findId(
+			@RequestParam("findId") String findId) {
+		
+		// DB 연동
+		UserEntity user = userBO.getUserEntityByEmail(findId); // findId = email
+		
+		// 응답값
+		Map<String, Object> result = new HashMap<>();
+		if (user != null) {
+			result.put("code", 200);
+			result.put("result", user.getLoginId());			
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "아이디를 찾을수 없습니다.");
+		}
+		return result;
+	}
+	
+	
+	@PostMapping("/find-pw")
+	public Map<String, Object> findPw(
+			@RequestParam("findPw") String findPw,
+			HttpSession session) {
+		
+		// DB 연동
+		UserEntity user = userBO.getUserEntityByLoginId(findPw);
+		
+		// 응답값
+		Map<String, Object> result = new HashMap<>();
+		if (user != null) {
+			session.getAttribute(user.getLoginId()); // 세션에 로그인 아이디 넣기
+			result.put("code", 200);
+			result.put("result", "성공");			
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "아이디를 찾을수 없습니다.");
+		}
+			return result;
+	}
+	
+	
 }
