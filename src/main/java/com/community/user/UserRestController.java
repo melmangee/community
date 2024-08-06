@@ -166,7 +166,12 @@ public class UserRestController {
 		return result;
 	}
 	
-	
+	/**
+	 * 비밀번호 재설정 아이디 확인 API
+	 * @param findPw
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/find-pw")
 	public Map<String, Object> findPw(
 			@RequestParam("findPw") String findPw,
@@ -178,7 +183,7 @@ public class UserRestController {
 		// 응답값
 		Map<String, Object> result = new HashMap<>();
 		if (user != null) {
-			session.getAttribute(user.getLoginId()); // 세션에 로그인 아이디 넣기
+			session.setAttribute("userLoginId", user.getLoginId()); // 세션에 로그인 아이디 넣기
 			result.put("code", 200);
 			result.put("result", "성공");			
 		} else {
@@ -188,5 +193,35 @@ public class UserRestController {
 			return result;
 	}
 	
+	
+	@PostMapping("/newPassword")
+	public Map<String, Object> newPassword(
+			@RequestParam("newPassword") String newPassword,
+			HttpSession session) {
+		
+		// 비밀번호 해싱
+		String hashedPassword = EncryptUtils.ShaEncoder(newPassword);
+		
+		// 세션된 아이디 가져오기
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		
+		// DB update
+		UserEntity user = userBO.updateUserPasswordByLoginId(userLoginId, hashedPassword);
+		
+		// 세션 아이디 제거하기
+		session.removeAttribute(userLoginId);
+		
+		// 응답값
+		Map<String,Object> result = new HashMap<>();
+		if(user != null) {
+			result.put("code", 200);
+			result.put("result", "성공");			
+		} else {
+			result.put("code", 500);
+			result.put("error_message", "비밀번호를 바꾸는데 실패 하였습니다.");
+		}
+		
+		return result;
+	}
 	
 }

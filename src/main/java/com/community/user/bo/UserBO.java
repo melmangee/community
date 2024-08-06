@@ -67,5 +67,21 @@ public class UserBO {
 				.build());
 	}
 	
-	
+	// input: loginId, Password
+	// output: UserEntity
+	public UserEntity updateUserPasswordByLoginId(String loginId, String password) {
+		
+		// Login 아이디로 기존 데이터 조회
+		UserEntity user = userRepository.findByLoginId(loginId);
+		
+		// 데이터의 값 변경한다.
+		if (user != null) {
+			user = user.toBuilder()
+					.password(password)
+					.build();
+			user = userRepository.save(user);
+		}
+		
+		return user;
+	}
 }
