@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+      
+<section layout:fragment="content" class="contents d-flex justify-content-center">
+	<div class="w-100">
+		<div class="d-flex mt-5 w-50">
+			<button id="likePostBtn" type="button" class="form-control mr-3 bg-primary">인기순</button>
+			<button id="recentPostBtn" type="button" class="form-control bg-primary">최신순</button>	
+		</div>
+		<div class="d-flex justify-content-between align-items-center mt-4">
+			<h1>글목록</h1>
+			<a id="writePlusBtn" href="/post/post-create-view"><h3>+</h3></a>	
+		</div>
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<th>NO.</th>
+					<th>제목</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="post, status : ${postList}">
+					<td th:text="${status.count}">1</td>
+					<td><a href="#" th:text="${post.subject}">1번글</a></td>
+				</tr> 
+			</tbody>
+		</table>
+		
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+		
+    </script>
+</th:block>

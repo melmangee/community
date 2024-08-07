@@ -9,4 +9,20 @@
  		FROM
  			`post`
  	</select>
+ 	
+ 	<select id="selectPostList" resultType="com.community.post.domain.Post">
+ 		SELECT
+ 			`id`
+			,`userId`
+			,`subject`
+			,`content`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`post`
+ 	</select>
+ 	
+ 	<insert id="insertPost" parameterType="map">
+ 		INSERT INTO `post`
+ 	</insert>
  </mapper>

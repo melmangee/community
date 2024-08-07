@@ -193,7 +193,12 @@ public class UserRestController {
 			return result;
 	}
 	
-	
+	/**
+	 * 비밀번호 
+	 * @param newPassword
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/newPassword")
 	public Map<String, Object> newPassword(
 			@RequestParam("newPassword") String newPassword,
