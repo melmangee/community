@@ -25,9 +25,11 @@ public class PostBO {
 		return postMapper.selectPostList();
 	}
 	
-	// input: 파라미터들
-	// output: X
-	public void addPost(int userId, String subject, String content, MultipartFile file) {
-		//postMapper.
+	// 이미지 말고 글 생성?
+	// input: userId, subject, content
+	// output: Post
+	public Post addPost(int userId, String subject, String content) {
+		return postMapper.insertPost(userId, subject, content);	
 	}
+	
 }

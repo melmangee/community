@@ -14,7 +14,8 @@
 		<textarea rows="10" id="content" class="form-control" placeholder="내용을 입력하세요"></textarea>
 		
 		<div class="d-flex justify-content-end my-3">
-			<input type="file" id="file" accept=".jpg, .png, .gif">
+			<input type="file" id="file" accept=".jpg, .png, .gif" multiple>
+			<div class="bu name"></div>
 		</div>
 		
 		<div class="d-flex justify-content-between">
@@ -31,6 +32,36 @@
     <script>
 		$(document).ready(function() {
 			
+			// 파일이 선택될 때, 1.유효성 체크  2.파일명 노출
+			$("#file").on('change', function(e) {
+				// 취소를 누를 때 처리(파일이 비워지므로 .name에서 에러 발생)
+				let file = e.target.files[0];
+				if (file == null) {
+					$("#file").val("");
+					$("#fileName").text("");
+					return;
+				}
+
+				//alert("이미지 선택");
+				let fileName = e.target.files[0].name; // leaves-8724660_640.jpg
+				console.log(fileName);
+
+				// 1. 확장자 validation
+				let ext = fileName.split(".").pop().toLowerCase();
+				console.log(ext);
+
+				if (ext != "gif" && ext != "png" && ext != "jpg") {
+					alert("이미지 파일만 업로드 할 수 있습니다.");
+					$("#file").val(""); // 파일 태그에 올라온 것 제거(보이지 않지만 꼭! 처리)
+					$("#fileName").text(""); // 보여지고 있는 파일명 초기화
+					return;
+				}
+
+				// 2. 파일명 노출
+				$("#fileName").text(fileName);
+			});
+			
+			
 			// 목록 버튼 클릭
 			$("#postListBtn").on("click", function() {
 				//alert("클릭");
@@ -43,6 +74,7 @@
 				
 				let subject = $("#subject").val().trim();
 				let content = $("#content").val();
+				let file = $("#file")[0].files[0]; // 파일 객체 가져오기
 				
 				if (!subject) {
 					alert("제목을 입력하세요");
@@ -56,6 +88,7 @@
 				let formData = new FormData();
 				formData.append("subject", subject);
 				formData.append("content", content);
+				formData.append("file", $("#file")[0].files[0]);
 				
 				// AJAX
 				$.ajax({

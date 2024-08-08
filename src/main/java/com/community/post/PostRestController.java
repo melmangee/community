@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.community.post.bo.PostBO;
+import com.community.post.domain.Post;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -31,9 +32,8 @@ public class PostRestController {
 		// 글쓴이 번호를 session에서 꺼낸다.
 		int userId = (int)session.getAttribute("userId");
 		
-		
 		// DB insert
-		//postBO.
+		postBO.addPost(userId, subject, content);
 		
 		// 응답값
 		Map<String, Object> result = new HashMap<>();

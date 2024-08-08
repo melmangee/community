@@ -16,9 +16,10 @@ public interface PostMapper {
 	
 	public List<Post> selectPostList();
 	
-	public void insertPost(
+	public Post insertPost(
 			@Param("userId") int userId, 
 			@Param("subject") String subject, 
-			@Param("content") String content, 
-			@Param("file") String imagePath);
+			@Param("content") String content);
+	
 }
+

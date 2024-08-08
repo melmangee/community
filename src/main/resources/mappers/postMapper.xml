@@ -22,7 +22,6 @@
 			`post`
  	</select>
  	
- 	<insert id="insertPost" parameterType="map">
- 		INSERT INTO `post`
- 	</insert>
+ 	
+ 	
  </mapper>

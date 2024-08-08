@@ -5,7 +5,7 @@
 			<div></div>
 			<!-- 로고 -->
 			<div>
-				<a href="#"><img alt="이미지" src="#"></a>
+				<a href="/post/post-list-view"><img alt="이미지" src="#"></a>
 			</div>
 			<!-- 로그인 -->
 			<div th:if="${session.userId != null}">
@@ -13,7 +13,7 @@
 				<a href="/user/sign-out">로그아웃</a>
 			</div>
 			<div th:unless="${session.userId != null}">
-				<a href="/user/sign-in-view">로그인</a>
+				<a href="/user/sign-in-view"><img alt="로그인" src="/img/my-account-login.png" width="50px"></a>
 			</div>
 		</div>
 	</header>
