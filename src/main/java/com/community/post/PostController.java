@@ -55,4 +55,27 @@ public class PostController {
 		return "post/postCreate";
 	}
 	
+	
+	/**
+	 * 글 상세 화면
+	 * @param postId
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/post-detail-view")
+	public String postDetailView(
+			@RequestParam("postId") int postId,
+			Model model) {
+		
+		// DB 조회
+		Post post = postBO.getPostByPostId(postId);
+		//UserEntity user = userBO.getUserEntityByPostId(postId);
+		
+		// model에 담기
+		model.addAttribute("post", post);
+		
+		// 화면 이동
+		return "post/postDetail";
+	}
+	
 }

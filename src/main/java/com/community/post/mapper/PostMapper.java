@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.community.post.domain.Post;
 
@@ -16,10 +15,13 @@ public interface PostMapper {
 	
 	public List<Post> selectPostList();
 	
-	public Post insertPost(
-			@Param("userId") int userId, 
-			@Param("subject") String subject, 
-			@Param("content") String content);
+	public int insertPost(Post post);
 	
+	public void insertImagePath(
+			@Param("userId") int userId,
+			@Param("postId") int postId, 
+			@Param("imagePath") String imagePath);
+	
+	public Post selectPostByPostId (int postId);
 }
 

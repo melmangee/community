@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<header class="bg-dark" th:fragment="headerFragment">
-		<div class="h-100 d-flex align-items-center justify-content-between">	
-			<div></div>
+		<div class="h-100 d-flex align-items-center justify-content-between">
+			
 			<!-- 로고 -->
-			<div>
-				<a href="/post/post-list-view"><img alt="이미지" src="#"></a>
-			</div>
+				<div class="ml-3">
+					<a href="/post/post-list-view"><img alt="이미지" src="/img/logo.png"></a>
+				</div>
+			
 			<!-- 로그인 -->
-			<div th:if="${session.userId != null}">
-				<span th:text="${session.userName} + '님 안녕하세요'"></span>
-				<a href="/user/sign-out">로그아웃</a>
+			
+				<div th:if="${session.userId != null}">
+					<a href="/user/sign-out" class="mr-2"><img alt="로그아웃 이미지" src="/img/logoutIcon.png" width=40></a>
+				</div>
+				<div th:unless="${session.userId != null}">
+					<a href="/user/sign-in-view" class="mr-2"><img alt="로그인" src="/img/loginIcon.png" width=40></a>
+				</div>
 			</div>
-			<div th:unless="${session.userId != null}">
-				<a href="/user/sign-in-view"><img alt="로그인" src="/img/my-account-login.png" width="50px"></a>
-			</div>
-		</div>
 	</header>
 </html>

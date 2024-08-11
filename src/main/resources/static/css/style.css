@@ -2,11 +2,12 @@
 
 .photo {min-height: 800px;}
 header {height:100px;}
-.contents {min-height:700px;}
+.contents {min-height:953px;
+			background-color:#FFFFFF}
 
 .sign-up-box {
 	width:600px;
-	background-color: #f1f1f1;}
+	background-color: #f1f1f1}
 	
 .findIdPw {color: #000000;}
 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+<section layout:fragment="content"
+	class="contents d-flex justify-content-center">
+	<div class="w-50">
+		<h1>글 상세</h1>
+		
+		<div class="card border rounded mt-3">
+			<!-- 글쓴이, 더보기(삭제) -->
+			<div class="p-2 d-flex justify-content-between">
+				<span class="font-weight-bold" th:text="${post.userId}">글쓴이</span> <span
+					class="font-weight-bold" th:text="${post.subject}">글 제목</span>
+				<!-- 더보기 ...(로그인 된 사람과 글쓴이 정보 일치할 때 보이게) -->
+				<a href="#" class="more-btn"> <img src="/img/notepad.png"
+					width="30">
+				</a>
+			</div>
+
+
+			<!-- 이미지가 있을 때만 영역 노출 -->
+			<div class="d-flex justify-content-center my-3">
+				<img alt="이미지"
+					src="https://cdn.pixabay.com/photo/2023/05/11/03/34/baseball-7985433_1280.jpg"
+					width="500px">
+			</div>
+
+			<!-- 좋아요 -->
+			<div class="card-like m-3">
+				<img
+					src="https://www.iconninja.com/files/214/518/441/heart-icon.png"
+					width="18" height="18" alt="empty heart"> <span
+					th:text="|좋아요 13개|"></span>
+			</div>
+
+			<!-- 글 -->
+			<div class="card-post m-3">
+				<span class="font-weight-bold" th:text="${post.userId}">글쓴이</span> 
+				<span th:text="${post.content}">글 내용입니다!!!!</span>
+			</div>
+
+			<!-- 댓글 -->
+			<div class="card-comment-title border-bottom">
+				<div class="font-weight-bold ml-3 mb-1">댓글</div>
+			</div>
+
+
+			<!-- 댓글 목록 -->
+			<div class="card-comment-list m-2">
+				<!-- 댓글들 -->
+				<div class="card-comment m-1">
+					<span class="font-weight-bold">댓글쓰니</span> <span>댓글 내용임</span>
+
+					<!-- 댓글 삭제(자신의 댓글만 가능) -->
+					<a href="#" class="comment-del-btn"> <img
+						src="https://www.iconninja.com/files/603/22/506/x-icon.png"
+						width="10" height="10">
+					</a>
+				</div>
+
+				<!-- 댓글 쓰기 -->
+				<div class="comment-write d-flex border-top mt-2">
+					<input type="text"
+						class="comment-input form-control border-0 mr-2 col-9"
+						placeholder="댓글 달기">
+					<button type="button" class="comment-btn btn btn-light col-3" th:data-post-id="${post.id}">게시</button>
+				</div>
+			</div>
+			<!-- 댓글 끝 -->
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+	<script>
+		$(document).ready(function() {
+			
+			
+			$(".comment-btn").on('click',function() {
+				let postId = $(this).data("post-id");
+				alert(postId);
+			});
+			
+		}); //ready 함수 끝
+	</script>
+</th:block>

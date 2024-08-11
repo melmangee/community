@@ -2,7 +2,6 @@ package com.community.user.bo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.community.user.entity.UserEntity;
 import com.community.user.repository.UserRepository;
@@ -66,7 +65,12 @@ public class UserBO {
 				.email(email)
 				.build());
 	}
-	
+	/**
+	 * 비밀번호 번경
+	 * @param loginId
+	 * @param password
+	 * @return
+	 */
 	// input: loginId, Password
 	// output: UserEntity
 	public UserEntity updateUserPasswordByLoginId(String loginId, String password) {
@@ -84,4 +88,5 @@ public class UserBO {
 		
 		return user;
 	}
+	
 }
