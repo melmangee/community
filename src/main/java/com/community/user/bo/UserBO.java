@@ -12,6 +12,11 @@ public class UserBO {
 	@Autowired
 	private UserRepository userRepository;
 	
+	
+	public UserEntity getUserEntityById(int id) {
+		return userRepository.findById(id);
+	}
+	
 	/**
 	 * 로그인 아이디 조회
 	 * @param loginId

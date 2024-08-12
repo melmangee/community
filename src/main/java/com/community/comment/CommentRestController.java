@@ -20,10 +20,17 @@ public class CommentRestController {
 	@Autowired
 	private CommentBO commentBO;
 	
+	/**
+	 * 댓글 추가
+	 * @param postId
+	 * @param content
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("postId") int postId,
-			@RequestParam("content") String content,
+			@RequestParam(value = "content", required= false) String content,
 			HttpSession session) {
 		
 		// 로그인된 유저 아이디 꺼내옴

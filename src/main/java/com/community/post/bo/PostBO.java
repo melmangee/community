@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.community.common.FileManagerService;
+import com.community.image.mapper.ImageMapper;
 import com.community.post.domain.Post;
 import com.community.post.mapper.PostMapper;
 
@@ -17,7 +18,11 @@ public class PostBO {
 	private PostMapper postMapper;
 
 	@Autowired
+	private ImageMapper imageMapper;
+	
+	@Autowired
 	private FileManagerService fileManagerService;
+	
 	
 	/**
 	 * 전체글 조회
@@ -30,6 +35,11 @@ public class PostBO {
 		return postMapper.selectPostList();
 	}
 	
+	/**
+	 * 글 상세 글 번호로 글 조회
+	 * @param postId
+	 * @return
+	 */
 	// input: postId
 	// output: Post or null
 	public Post getPostByPostId (int postId) {
@@ -64,7 +74,7 @@ public class PostBO {
 					String imagePath = fileManagerService.uploadFile(file, loginId); // 비어있지 않으면 파일 업로드
 					
 					// 이미지 DB에 저장
-					postMapper.insertImagePath(userId, postId, imagePath);
+					imageMapper.insertImagePath(userId, postId, imagePath);
 					
 				}
 			}

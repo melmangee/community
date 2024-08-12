@@ -56,6 +56,7 @@ public class PostController {
 	}
 	
 	
+	
 	/**
 	 * 글 상세 화면
 	 * @param postId
@@ -69,7 +70,6 @@ public class PostController {
 		
 		// DB 조회
 		Post post = postBO.getPostByPostId(postId);
-		//UserEntity user = userBO.getUserEntityByPostId(postId);
 		
 		// model에 담기
 		model.addAttribute("post", post);

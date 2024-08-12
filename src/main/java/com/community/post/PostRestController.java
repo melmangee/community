@@ -21,6 +21,14 @@ public class PostRestController {
 	@Autowired
 	PostBO postBO;
 
+	/**
+	 * 글쓰기 API
+	 * @param subject
+	 * @param content
+	 * @param files
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("subject") String subject,

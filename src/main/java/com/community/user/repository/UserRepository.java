@@ -7,6 +7,9 @@ import com.community.user.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 
 	// JPQL
+	
+	public UserEntity findById(int id); // 유저 아이디로 조회
+	
 	public UserEntity findByLoginId(String loginId); // 로그인 아이디(중복) 조회
 	
 	public UserEntity findByEmail(String email); // 이메일(중복) 조회

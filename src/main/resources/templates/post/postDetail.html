@@ -62,6 +62,7 @@
 				<!-- 댓글 쓰기 -->
 				<div class="comment-write d-flex border-top mt-2">
 					<input type="text"
+						id="postComment"
 						class="comment-input form-control border-0 mr-2 col-9"
 						placeholder="댓글 달기">
 					<button type="button" class="comment-btn btn btn-light col-3" th:data-post-id="${post.id}">게시</button>
@@ -76,12 +77,32 @@
 	<script>
 		$(document).ready(function() {
 			
-			
+			// 댓글 쓰기
 			$(".comment-btn").on('click',function() {
 				let postId = $(this).data("post-id");
-				alert(postId);
-			});
-			
+				let content = $("#postComment").val();
+				
+
+				// AJAX
+				$.ajax({
+					 type:"post"
+					 , url:"/comment/create"
+					 , data: { 
+						 "postId" : postId,
+						 "content" : content}
+					 , success : function(data) {
+						 if(data.code == 200) {
+							 location.reload();
+						 } else {
+							 alert("data.error_message");
+						 }
+					 }
+					, error:function(error) {
+						alert("댓글쓰기에 실패했습니다.")
+					}
+				}) // ajax 끝
+			}); // 댓글쓰기 끝
+					
 		}); //ready 함수 끝
 	</script>
 </th:block>

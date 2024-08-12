@@ -2,14 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
- <mapper namespace="com.community.comment.mapper.CommentMapper">
- 	<!-- 댓글 추가 -->
- 	<insert id="insertComment" parameterType="map">
- 		INSERT INTO `comment`
+ <mapper namespace="com.community.image.mapper.ImageMapper">
+ 	
+ 	<!-- 이미지 경로 저장 -->
+ 	<insert id="insertImagePath" parameterType="map">
+ 		INSERT INTO `image`
  		(
  			`userId`
 			,`postId`
-			,`content`
+			,`imagePath`
 			,`createdAt`
 			,`updatedAt`
  		)
@@ -17,10 +18,9 @@
  		(
  			#{userId}
  			, #{postId}
- 			, #{content}
+ 			, #{imagePath}
  			, NOW()
  			, NOW()
  		)
  	</insert>
- 
  </mapper>
