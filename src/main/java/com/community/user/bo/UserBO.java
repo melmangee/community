@@ -13,8 +13,13 @@ public class UserBO {
 	private UserRepository userRepository;
 	
 	
-	public UserEntity getUserEntityById(int id) {
-		return userRepository.findById(id);
+	/**
+	 * 아이디로 찾기
+	 * @param id
+	 * @return
+	 */
+	public UserEntity getUserEntityById(int userId) {
+		return userRepository.findById(userId);
 	}
 	
 	/**
