@@ -24,7 +24,9 @@ public class PostView {
 	// 이미지
 	
 	// 좋아요 N개
-
+	private int likeCount;
+	
 	// 좋아요를 누른지 여부
+	private boolean filledLike;
 
 }

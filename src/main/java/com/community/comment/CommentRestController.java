@@ -34,13 +34,19 @@ public class CommentRestController {
 			@RequestParam(value = "content", required = false) String content, HttpSession session) {
 
 		// 로그인된 유저 아이디 꺼내옴
+		Map<String, Object> result = new HashMap<>();
 		Integer userId = (Integer) session.getAttribute("userId");
+		if (userId == null) {
+			// 비로그인
+			result.put("code", 403);
+			result.put("error_message", "로그인을 해주세요.");
+			return result;
+		}
 
 		// DB insert
 		commentBO.addComment(postId, userId, content);
 
 		// 응답값
-		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
 		result.put("result", "성공");
 		return result;

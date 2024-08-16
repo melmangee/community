@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.community.onePost.bo.OnePostBO;
 import com.community.onePost.domain.PostView;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/post")
 @Controller
 public class OnePostController {
@@ -26,9 +28,12 @@ public class OnePostController {
 	@GetMapping("/post-detail-view")
 	public String postDetailView(
 			@RequestParam("postId") int postId,
-			Model model) {
+			Model model,
+			HttpSession session) {
 		
-		PostView postView = onePostBO.generatePostView(postId);
+		int userId = (int)session.getAttribute("userId");
+		
+		PostView postView = onePostBO.generatePostView(postId, userId);
 			
 		// model에 담기
 		model.addAttribute("postView", postView);

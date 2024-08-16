@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.community.comment.bo.CommentBO;
 import com.community.comment.domain.CommentView;
+import com.community.like.bo.LikeBO;
 import com.community.onePost.domain.PostView;
 import com.community.post.bo.PostBO;
 import com.community.post.domain.Post;
@@ -25,9 +26,12 @@ public class OnePostBO {
 	@Autowired
 	private CommentBO commentBO;
 	
-	// input: postId
+	@Autowired
+	private LikeBO likeBO;
+	
+	// input: postId, userId
 	// output: PostView
-	public PostView generatePostView(int postId) {
+	public PostView generatePostView(int postId, int userId) {
 		PostView postView = new PostView();
 		
 		// 글 조회
@@ -41,6 +45,14 @@ public class OnePostBO {
 		// 댓글 N 개
 		List<CommentView> commentList = commentBO.getCommentByPostId(postId);
 		postView.setCommentList(commentList);
+		
+		// 좋아요 개수
+		int likeCount= likeBO.getLikeCountByPostId(postId) ;
+		postView.setLikeCount(likeCount);
+		
+		// 좋아요 여부	채우기		
+		Boolean isLike = likeBO.filledLikeByPostIdUserId(postId, userId);
+		postView.setFilledLike(isLike);
 		
 		return postView;
 	}
