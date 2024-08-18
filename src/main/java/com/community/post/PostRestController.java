@@ -4,12 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.community.like.bo.LikeBO;
 import com.community.post.bo.PostBO;
 
 import jakarta.servlet.http.HttpSession;
@@ -21,6 +23,9 @@ public class PostRestController {
 	@Autowired
 	PostBO postBO;
 
+	@Autowired
+	LikeBO likeBO;
+	
 	/**
 	 * 글쓰기 API
 	 * @param subject
@@ -50,4 +55,5 @@ public class PostRestController {
 		return result;
 		
 	}
+	
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html 
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/defaultLayout}">
+<section layout:fragment="content" class="contents d-flex justify-content-center align-items-center">
+	<div class="w-50">	
+		
+		<h1>글 수정</h1>
+		
+			<input type="text" id="subject" class="form-control">
+			
+			<textarea rows="10" id="content" class="form-control mt-3" placeholder="내용을 입력하세요"></textarea>
+			
+			<div class="d-flex justify-content-end my-3">
+				<input type="file" id="files" accept=".jpg, .png, .gif" multiple>
+			</div>
+		
+		<div class="d-flex justify-content-between">
+			<button type="button" id="postListBtn" class="btn btn-dark">목록</button>
+			
+			<div>
+				<button type="button" id="saveBtn" class="btn btn-warning">수정</button>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="script">
+    <script>
+    $(document).ready(function() {
+    
+    	// 목록 버튼 클릭
+		$("#postListBtn").on("click", function() {
+			//alert("클릭");
+			location.href="/post/post-list-view";
+		}); // 목록 버튼 클릭 끝
+		
+    }); // ready 함수 끝
+    
+    </script>
+</th:block>

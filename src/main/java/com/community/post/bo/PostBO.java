@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.community.common.FileManagerService;
-import com.community.image.mapper.ImageMapper;
+import com.community.image.bo.ImageBO;
 import com.community.post.domain.Post;
 import com.community.post.mapper.PostMapper;
 
@@ -18,7 +18,7 @@ public class PostBO {
 	private PostMapper postMapper;
 
 	@Autowired
-	private ImageMapper imageMapper;
+	private ImageBO imageBO;
 	
 	@Autowired
 	private FileManagerService fileManagerService;
@@ -65,7 +65,8 @@ public class PostBO {
         post.setContent(content);
 		
 		// 게시물 insert 하고 아이디 저장
-		int postId = postMapper.insertPost(post);
+		postMapper.insertPost(post);
+		int postId = post.getId();  
 		
 		// 이미지 파일이 있는경우 이미지 저장
 		if (files != null) {
@@ -74,8 +75,7 @@ public class PostBO {
 					String imagePath = fileManagerService.uploadFile(file, loginId); // 비어있지 않으면 파일 업로드
 					
 					// 이미지 DB에 저장
-					imageMapper.insertImagePath(userId, postId, imagePath);
-					
+					imageBO.insertImagePath(userId, postId, imagePath);
 				}
 			}
 		}

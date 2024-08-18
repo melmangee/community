@@ -42,18 +42,19 @@
 				
 				let subject = $("#subject").val().trim();
 				let content = $("#content").val();
-				let fileName = $("#files").val();
+				let files = $("#files")[0].files;
 				
 				if (!subject) {
 					alert("제목을 입력하세요");
 					return;
 				}
 				
-				// 파일명이 비워져 있지 않으면 => 확장자 체크
-				if (fileName) {
-					//alert("파일이 있다.");
+				// 파일 확장자 체크
+				for (let i = 0; i < files.length; i++) {
+					let fileName = files[i].name;
 					let extension = fileName.split(".").pop().toLowerCase(); // pop() : stack에서 가장 마지막 것 //toLowerCase() :String을 소문자로
-					console.log(extension);
+					//console.log(extension);
+					
 					
 					if ($.inArray(extension, ["jpg", "gif", "png"]) == -1) { // jpg,... 1 아니면 -1
 						alert("이미지 파일만 업로드 할 수 있습니다.");
@@ -62,14 +63,17 @@
 					}
 				}
 				
-				console.log(subject);
-				console.log(content);
+				//console.log(subject);
+				//console.log(content);
 				
 				// 이미지 폼태그
 				let formData = new FormData();
 				formData.append("subject", subject);
 				formData.append("content", content);
-				formData.append("files", $("#files")[0].files[0]); //바꿔야함
+				
+				for (let i= 0; i < files.length; i++) {
+					formData.append("files", files[i]); 					
+				}
 				
 				// AJAX
 				$.ajax({

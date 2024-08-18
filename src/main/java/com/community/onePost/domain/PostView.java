@@ -3,6 +3,7 @@ package com.community.onePost.domain;
 import java.util.List;
 
 import com.community.comment.domain.CommentView;
+import com.community.image.domain.Image;
 import com.community.post.domain.Post;
 import com.community.user.entity.UserEntity;
 
@@ -21,7 +22,8 @@ public class PostView {
 	// 댓글 N개
 	private List<CommentView> commentList;
 
-	// 이미지
+	// 멀티 이미지
+	private List<Image> imageList;
 	
 	// 좋아요 N개
 	private int likeCount;

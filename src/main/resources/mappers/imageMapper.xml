@@ -23,4 +23,18 @@
  			, NOW()
  		)
  	</insert>
+ 	
+ 	<select id="selectImageByPostId" parameterType="int" resultType="com.community.image.domain.Image">
+ 		SELECT
+ 			`id`
+			,`userId`
+			,`postId`
+			,`imagePath`
+			,`createdAt`
+			,`updatedAt`
+		FROM
+			`image`
+		WHERE
+			`postId` = #{postId}
+ 	</select>
  </mapper>

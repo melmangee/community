@@ -11,11 +11,27 @@
 			<!-- 로그인 -->
 			
 				<div th:if="${session.userId != null}">
-					<a href="/user/sign-out" class="mr-2"><img alt="로그아웃 이미지" src="/img/logoutIcon.png" width=40></a>
+					<a href="#" class="mr-2"><img alt="로그아웃 이미지" src="/img/logoutIcon.png" width=40 data-toggle="modal" data-target="#modal"></a>
 				</div>
 				<div th:unless="${session.userId != null}">
 					<a href="/user/sign-in-view" class="mr-2"><img alt="로그인" src="/img/loginIcon.png" width=40></a>
 				</div>
 			</div>
+			
+			<!-- Modal: 타임리프 레이아웃 때문에 section 태그 안쪽에 위치 -->
+		<div class="modal fade" id="modal">
+			<!-- modal-sm:작은 모달창, modal-dialog-centered:수직 가운데 정렬 -->
+			<div class="modal-dialog modal-sm modal-dialog-centered">
+				<div class="modal-content text-center">
+		      		<div class="py-3">
+		      			<a href="#" id="myPageBtn">마이페이지</a>
+		      		</div>
+		      		<div class="py-3 border-top">
+		      			<a href="/user/sign-out" class="text-danger">로그아웃</a>
+		      		</div>
+				</div>
+			</div>
+		</div>
+			
 	</header>
 </html>

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.community.post.bo.PostBO;
 import com.community.post.domain.Post;
@@ -53,6 +52,22 @@ public class PostController {
 	@GetMapping("/post-create-view")
 	public String postCreateView() {
 		return "post/postCreate";
+	}
+	
+	/**
+	 * 글 수정 화면
+	 * @return
+	 */
+	@GetMapping("/post-update-view")
+	public String postUpdateView(HttpSession session, Model model) {
+		
+//		// DB 조회 - 글 목록
+//		Post post = postBO.getPostByPostId(postId);
+//		
+//		// 모델에 담기
+//		model.addAttribute("post", post);
+		
+		return "post/postUpdate";
 	}
 	
 }

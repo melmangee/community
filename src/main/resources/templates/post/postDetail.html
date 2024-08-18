@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/defaultLayout}">
 <section layout:fragment="content"
-	class="contents d-flex justify-content-center">
+	class="contents d-flex justify-content-center align-items-center">
 	<div class="w-50">
 		<h1>글 상세</h1>
 
@@ -12,19 +12,21 @@
 			<div class="p-2 d-flex justify-content-between">
 				<span class="font-weight-bold" th:text="${postView.user.loginId}">글쓴이</span> <span
 					class="font-weight-bold" th:text="${postView.post.subject}">글 제목</span>
-				<!-- 더보기 ...(로그인 된 사람과 글쓴이 정보 일치할 때 보이게) -->
-				<a href="#" class="more-btn"> <img src="/img/notepad.png"
-					width="30">
+				
+				<!-- 더보기 (로그인 된 사람과 글쓴이 정보 일치할 때 보이게) -->
+				<a th:if="${session.userId == postView.post.userId}" href="#" class="more-btn" th:data-post-id="${postView.post.id}" data-toggle="modal" data-target="#modal2"> 
+					<img src="/img/notepad.png" width="30">
 				</a>
+				<div th:unless="${session.userId == postView.post.userId}"></div>
 			</div>
 
+           <!-- 이미지가 있을 때만 영역 노출 -->
+            <div class="justify-content-center my-3" th:if="${! #lists.isEmpty(postView.imageList)}">
+                <div class="m-2" th:each="image : ${postView.imageList}">
+                    <img th:src="|${image.imagePath}|" alt="각각 이미지" width="300">
+                </div>
+            </div>
 
-			<!-- 이미지가 있을 때만 영역 노출 -->
-			<div class="d-flex justify-content-center my-3">
-				<img alt="이미지"
-					src="https://cdn.pixabay.com/photo/2023/05/11/03/34/baseball-7985433_1280.jpg"
-					width="500px">
-			</div>
 
 			<!-- 좋아요 -->
 			<div class="card-like m-3">
@@ -71,6 +73,21 @@
 			</div>
 			<!-- 댓글 끝 -->
 		</div>
+		
+		<!-- Modal: 타임리프 레이아웃 때문에 section 태그 안쪽에 위치 -->
+		<div class="modal fade" id="modal2">
+			<!-- modal-sm:작은 모달창, modal-dialog-centered:수직 가운데 정렬 -->
+			<div class="modal-dialog modal-sm modal-dialog-centered">
+				<div class="modal-content text-center">
+		      		<div class="py-3">
+		      			<a th:href="|/post/post-update-view?postId=${postView.post.id}|" id="postUpdateBtn" th:data-post-id="${postView.post.id}">수정하기</a>
+		      		</div>
+		      		<div class="py-3 border-top">
+		      			<a href="#" id="postDeleteBtn" class="text-danger">삭제하기</a>
+		      		</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
 
@@ -105,10 +122,11 @@
 			}); // 댓글쓰기 끝
 
 			// 댓글 삭제
-			$(".comment-del-btn").on("click", function(){
+			$(".comment-del-btn").on("click", function(e){
 				//alert("삭제");
 				let commentId = $(this).data("comment-id")
 				//alert(commentId);
+				e.preventDefault();
 				
 				$.ajax({
 					type:"delete"
@@ -131,10 +149,11 @@
 			}); // 댓글 삭제 끝
 			
 			// 좋아요 클릭
-			$(".like-btn").on("click", function() {
+			$(".like-btn").on("click", function(e) {
 				//alert("클릭");
 				let postId = $(this).data("post-id");
 				//alert(postId);
+				e.preventDefault();
 				
 				//AJAX
 				$.ajax({
@@ -143,6 +162,7 @@
 					, success: function(data) {
 						if (data.code= 200) {
 							location.reload(true);
+							
 						} else if (data.code == 403) {
 							alert(data.error_message);
 							location.href = "/user/sign-in-view";
@@ -155,7 +175,18 @@
 				}); // 좋아요 AJAX 끝
 				
 			}); //좋아요 끝
+			
+			// 더보기
+			$(".more-btn").on('click', function(e) {
+				let postId = $(this).data('post-id');
+				//alert(postId);
 				
+				// 1개만 존재하는 modal을 재활용하기 위해 data-post-id를 심어놓는다.
+				$("#modal").data('post-id', postId); // setting
+				//($("#modal").data('post-id'));
+				
+			});
+			
 			
 		}); //ready 함수 끝
 	</script>

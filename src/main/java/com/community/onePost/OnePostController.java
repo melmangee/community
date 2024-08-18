@@ -23,6 +23,7 @@ public class OnePostController {
 	 * 글 상세 화면
 	 * @param postId
 	 * @param model
+	 * @param session
 	 * @return
 	 */
 	@GetMapping("/post-detail-view")
@@ -31,7 +32,10 @@ public class OnePostController {
 			Model model,
 			HttpSession session) {
 		
-		int userId = (int)session.getAttribute("userId");
+		Integer userId = (Integer)session.getAttribute("userId");
+		if (userId == null) {
+			return "user/sign-in-view";
+		}
 		
 		PostView postView = onePostBO.generatePostView(postId, userId);
 			
@@ -41,4 +45,28 @@ public class OnePostController {
 		// 화면 이동
 		return "post/postDetail";
 	}
+	
+//	/**
+//	 * 글 수정 화면
+//	 * @param postId
+//	 * @param model
+//	 * @param session
+//	 * @return
+//	 */
+//	@RequestMapping("/post-update-view")
+//	public String postUpdateView(
+//			@RequestParam("postId") int postId,
+//			Model model,
+//			HttpSession session) {
+//		
+//		int userId = (int)session.getAttribute("userId");
+//		
+//		PostView postUpdateView = onePostBO.generatePostView(postId, userId);
+//			
+//		// model에 담기
+//		model.addAttribute("postUpdateView", postUpdateView);
+//		
+//		// 화면 이동
+//		return "post/postUpdate";
+//	}
 }
