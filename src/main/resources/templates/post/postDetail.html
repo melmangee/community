@@ -27,6 +27,10 @@
                 </div>
             </div>
 
+			<!-- 글 -->
+			<div class="card-post m-3"> 
+				<span th:text="${postView.post.content}">글 내용입니다!!!!</span>
+			</div>
 
 			<!-- 좋아요 -->
 			<div class="card-like m-3">
@@ -37,11 +41,6 @@
 				<span th:text="|좋아요 ${postView.likeCount}개|"></span>
 			</div>
 
-			<!-- 글 -->
-			<div class="card-post m-3">
-				<span class="font-weight-bold" th:text="${postView.user.loginId}">글쓴이</span> <span
-					th:text="${postView.post.content}">글 내용입니다!!!!</span>
-			</div>
 
 			<!-- 댓글 -->
 			<div class="card-comment-title border-bottom">
@@ -184,9 +183,31 @@
 				// 1개만 존재하는 modal을 재활용하기 위해 data-post-id를 심어놓는다.
 				$("#modal").data('post-id', postId); // setting
 				//($("#modal").data('post-id'));
-				
-			});
 			
+			}); // 더보기 끝
+			
+			$("#postDeleteBtn").on('click', function(e) {
+				e.preventDefault(); // a 태그 위로 올라감 방지
+				let postId = $("#modal").data("post-id");
+				//alert(postId);
+				
+				// 글 삭제
+				$.ajax({
+					type:"delete"
+					, url:"/post/delete"
+					, data: {"postId":postId}
+					, success: function(data) {
+						if (data.code == 200) {
+							location.href="/post/post-list-view";
+						} else {
+							alert(data.error_message);
+						}
+					}
+					, error: function(e) {
+						alert("삭제하는데 실패했습니다.");
+					}
+				});
+			});
 			
 		}); //ready 함수 끝
 	</script>

@@ -37,4 +37,12 @@
 		WHERE
 			`postId` = #{postId}
  	</select>
+ 	
+ 	<delete id="deleteImageByPostId" parameterType="int">
+ 		DELETE 
+ 		FROM 
+ 			`image`
+ 		WHERE 
+ 			`postId` = #{postId}
+ 	</delete>
  </mapper>

@@ -17,5 +17,7 @@ public interface PostMapper {
 	public int insertPost(Post post);
 	
 	public Post selectPostByPostId (int postId);
+	
+	public void PostDelete(int postId);
 }
 

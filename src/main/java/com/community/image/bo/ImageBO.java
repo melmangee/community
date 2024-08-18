@@ -1,6 +1,5 @@
 package com.community.image.bo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,4 +31,13 @@ public class ImageBO {
 	 public List<Image> getImageByPostId(int postId) {
 		return imageMapper.selectImageByPostId(postId);
 	}
+	 
+	 /**
+	  * 이미지 삭제(글번호)
+	  * @param postId
+	  */
+	 public void deleteImageByPostId(int postId) {
+		imageMapper.deleteImageByPostId(postId);
+	 }
+	 
 }

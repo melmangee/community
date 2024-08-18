@@ -16,4 +16,6 @@ public interface ImageMapper {
 			@Param("imagePath") String imagePath);
 	
 	public List<Image>selectImageByPostId(int postId);
+	
+	public int deleteImageByPostId(int postId);
 }
