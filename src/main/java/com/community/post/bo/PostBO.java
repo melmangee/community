@@ -36,7 +36,7 @@ public class PostBO {
 	private LikeBO likeBO;
 
 	/**
-	 * 전체글 조회
+	 * 전체글 조회(최신 순)
 	 * 
 	 * @return
 	 */
@@ -46,6 +46,15 @@ public class PostBO {
 		return postMapper.selectPostList();
 	}
 
+	/**
+	 * 전체글 좋아요 순 조회
+	 * @return
+	 */
+	public List<Post> getPostListByLikeRank() {
+		return postMapper.selectPostListByLikeRank();
+	}
+	
+	
 	/**
 	 * 글 상세 글 번호로 글 조회
 	 * 
@@ -94,6 +103,11 @@ public class PostBO {
 		}
 	}
 
+	/**
+	 * 글삭제 API
+	 * @param postId
+	 * @param userId
+	 */
 	public void deletePostByPostIdUserId(int postId, int userId) {
 		// 기존 글 가져오기
 		Post post = postMapper.selectPostByPostId(postId);
@@ -125,6 +139,15 @@ public class PostBO {
 		postMapper.PostDelete(postId);
 	}
 
+	/**
+	 * 글 수정 API
+	 * @param userId
+	 * @param loginId
+	 * @param postId
+	 * @param subject
+	 * @param content
+	 * @param files
+	 */
 	// input: 파라미터 6개
 	// output: X
 	public void updatePostByPostId(int userId, String loginId, int postId, String subject, String content,

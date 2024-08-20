@@ -26,9 +26,14 @@
 				<tr th:each="post, status : ${postList}">
 					<td th:text="${status.count}">1</td>
 					<td><a th:href="|/onePost/post-detail-view?postId=${post.id}|" th:text="${post.subject}">1번글</a></td>
-				</tr> 
+				</tr>
 			</tbody>
 		</table>
+		
+		<!-- 페이징 -->
+		<div>
+		
+		</div>
 	</div>
 </section>
 
@@ -36,6 +41,19 @@
     <script>
 		$(document).ready(function() {
 			
+			// 인기순 버튼 클릭
+			$("#likePostBtn").on("click", function() {
+				let beforeUrl = window.location.href.split('?')[0]; // 쿼리 파라미터를 제거한 기본 URL
+                let newUrl = beforeUrl + '?orderby=likeRank'; // 새로운 쿼리 파라미터 추가
+                window.location.href = newUrl; // 새 URL로 이동
+			}); // 인기순 버튼 끝
+			
+			// 최신순 버튼 클릭
+			$("#recentPostBtn").on("click", function() {
+                let beforeUrl = window.location.href.split('?')[0]; // 쿼리 파라미터를 제거한 기본 URL
+                let newUrl = beforeUrl + '?orderby=recentRank'; // 새로운 쿼리 파라미터 추가
+                window.location.href = newUrl; // 새 URL로 이동
+            }); // 최신순 버튼 끝
 			
 		}); // ready 끝 
 			

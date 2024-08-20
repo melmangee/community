@@ -11,7 +11,7 @@
  			`post`
  	</select>
  	
- 	<!-- 게시물 목록 조회 -->
+ 	<!-- 게시물 목록 조회  최신순 -->
  	<select id="selectPostList" resultType="com.community.post.domain.Post">
  		SELECT
  			`id`
@@ -22,6 +22,8 @@
 			,`updatedAt`
 		FROM
 			`post`
+		ORDER By
+			`id` DESC	
  	</select>
  	
  	<!-- 글 번호로 글 조회 -->
@@ -75,5 +77,30 @@
  		WHERE
  			`id` = #{postId}
  	</update>
+ 	
+ 	<select id="selectPostListByLikeRank" resultType="com.community.post.domain.Post">
+    SELECT
+        p.`id`,
+        p.`userId`,
+        p.`subject`,
+        p.`content`,
+        p.`createdAt`,
+        p.`updatedAt`,
+        IFNULL(l.like_count, 0) AS like_count
+    FROM
+        `post` AS p
+    LEFT JOIN (
+        SELECT
+            `postId`,
+            COUNT(*) AS like_count
+        FROM
+            `like`
+        GROUP BY
+            `postId`
+    ) AS l
+    ON p.`id` = l.`postId`
+    ORDER BY
+        like_count DESC;
+	</select>
  	
  </mapper>

@@ -1,10 +1,12 @@
 package com.community.post;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.community.like.bo.LikeBO;
 import com.community.post.bo.PostBO;
+import com.community.post.domain.Post;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -84,6 +87,15 @@ public class PostRestController {
 		return result;
 	}
 	
+	/**
+	 * 글 수정 API
+	 * @param postId
+	 * @param subject
+	 * @param content
+	 * @param files
+	 * @param session
+	 * @return
+	 */
 	@PutMapping("/update")
 	public Map<String, Object> update(
 			@RequestParam("postId") int postId,
@@ -105,8 +117,5 @@ public class PostRestController {
 		result.put("code", 200);
 		result.put("result", "성공");
 		return result;
-		
-		
 	}
-	
 }

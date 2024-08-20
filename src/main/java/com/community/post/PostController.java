@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.community.post.bo.PostBO;
 import com.community.post.domain.Post;
@@ -28,7 +29,10 @@ public class PostController {
 	 * @return
 	 */
 	@GetMapping("/post-list-view")
-	public String postListView(HttpSession session, Model model) {
+	public String postListView(
+			@RequestParam(value = "orderby", required = false) String orderby
+			, HttpSession session
+			, Model model) {
 
 		// 로그인 여부 확인
 		Integer userId = (Integer) session.getAttribute("userId");
@@ -38,10 +42,17 @@ public class PostController {
 		}
 
 		// DB 조회 - 글 목록
-		List<Post> postList = postBO.getPostList();
-
+		List<Post> postList;  
+		if ("likeRank".equals(orderby)) { // 
+			postList = postBO.getPostListByLikeRank(); // 인기순 정렬
+		} else if ("recentRank".equals(orderby)) {
+	        postList = postBO.getPostList(); // '최신순'
+	    } else {
+	        postList = postBO.getPostList(); // 기본 정렬 최신순
+	    }
+		
 		// 모델에 담기
-		model.addAttribute("postList", postList);
+		 model.addAttribute("postList", postList);
 
 		return "post/postList";
 	}
