@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.community.post.domain.Post;
 
@@ -19,5 +20,10 @@ public interface PostMapper {
 	public Post selectPostByPostId (int postId);
 	
 	public void PostDelete(int postId);
+	
+	public void updatePostByPostId(
+			@Param("postId") int postId,
+			@Param("subject") String subject,
+			@Param("content") String content);
 }
 

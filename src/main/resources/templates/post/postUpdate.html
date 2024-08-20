@@ -7,10 +7,15 @@
 	<div class="w-50">	
 		
 		<h1>글 수정</h1>
-		
-			<input type="text" id="subject" class="form-control" placeholder="수정된 제목을 입력하세요">
+			<input type="text" id="subject" class="form-control" th:value="${postUpdateView.post.subject}">
 			
-			<textarea rows="10" id="content" class="form-control mt-3" placeholder="수정된 내용을 입력하세요"></textarea>
+			<div class="justify-content-center my-3" th:if="${! #lists.isEmpty(postUpdateView.imageList)}">
+                <div class="m-2" th:each="image : ${postUpdateView.imageList}">
+                    <img th:src="|${image.imagePath}|" alt="각각 이미지" width="300">
+                </div>
+            </div>
+			
+			<textarea rows="10" id="content" class="form-control mt-3" th:text="${postUpdateView.post.content}"></textarea>
 			
 			<div class="d-flex justify-content-end my-3">
 				<input type="file" id="files" accept=".jpg, .png, .gif" multiple>
@@ -20,7 +25,7 @@
 			<button type="button" id="postListBtn" class="btn btn-dark">목록</button>
 			
 			<div>
-				<button type="button" id="saveBtn" class="btn btn-warning">수정</button>
+				<button type="button" id="saveBtn" class="btn btn-warning" th:data-post-id=${postUpdateView.post.id}>수정</button>
 			</div>
 		</div>
 	</div>
@@ -35,6 +40,74 @@
 			//alert("클릭");
 			location.href="/post/post-list-view";
 		}); // 목록 버튼 클릭 끝
+		
+		// 글 수정
+		$("#saveBtn").on('click', function() {
+			//alert("글쓰기");
+		
+            let postId = $(this).data("post-id");
+         	//console.log(postId);
+            let subject = $("#subject").val().trim();
+			let content = $("#content").val();
+			let files = $("#files")[0].files;
+			
+			if (!subject) {
+				alert("제목을 입력하세요");
+				return;
+			}
+			
+			// 파일 확장자 체크
+			for (let i = 0; i < files.length; i++) {
+				let fileName = files[i].name;
+				let extension = fileName.split(".").pop().toLowerCase(); // pop() : stack에서 가장 마지막 것 //toLowerCase() :String을 소문자로
+				//console.log(extension);
+				
+				
+				if ($.inArray(extension, ["jpg", "gif", "png"]) == -1) { // jpg,... 1 아니면 -1
+					alert("이미지 파일만 업로드 할 수 있습니다.");
+					$("#file").val(""); // 파일을 비운다.
+					return;
+				}
+			}
+			
+			// 이미지 폼태그
+			let formData = new FormData();
+			formData.append("postId", postId);
+			formData.append("subject", subject);
+			formData.append("content", content);
+			
+			for (let i= 0; i < files.length; i++) {
+				formData.append("files", files[i]); 					
+			}
+			
+			// AJAX
+			$.ajax({
+				// request
+				type:"Put"
+				, url:"/post/update"
+				, data:formData
+				, enctype:"multipart/form-data" // 파일업로드 필수
+				, processData:false // 파일업로드 필수 설정
+				, contentType:false // 파일업로드 필수 설정
+				
+				// response
+				, success:function(data) {
+					if(data.code == 200) {
+						alert("글이 수정 되었습니다.");
+						location.reload();
+					} else {
+						alert(data.error_message);
+					}
+				}
+				, error:function(error) {
+					alert("글을 저장하는데 실패했습니다.");
+				}
+				
+			});
+			
+			
+			
+		});
 		
     }); // ready 함수 끝
     

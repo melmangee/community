@@ -25,7 +25,7 @@
 			<tbody>
 				<tr th:each="post, status : ${postList}">
 					<td th:text="${status.count}">1</td>
-					<td><a th:href="|/post/post-detail-view?postId=${post.id}|" th:text="${post.subject}">1번글</a></td>
+					<td><a th:href="|/onePost/post-detail-view?postId=${post.id}|" th:text="${post.subject}">1번글</a></td>
 				</tr> 
 			</tbody>
 		</table>

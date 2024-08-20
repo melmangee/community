@@ -15,7 +15,7 @@ public class ImageBO {
 	private ImageMapper imageMapper;
 	
 	/**
-	 * 이미지 저장
+	 * 이미지 저장 / 업데이트 재사용
 	 * @param userId
 	 * @param postId
 	 * @param imagePath
@@ -39,5 +39,4 @@ public class ImageBO {
 	 public void deleteImageByPostId(int postId) {
 		imageMapper.deleteImageByPostId(postId);
 	 }
-	 
 }

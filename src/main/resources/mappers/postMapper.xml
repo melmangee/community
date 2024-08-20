@@ -66,4 +66,14 @@
  			`id` = #{postId}
  	</delete>
  	
+ 	<update id="updatePostByPostId" parameterType="map">
+ 		UPDATE `post`
+ 		SET
+ 			`subject` = #{subject}
+ 			, `content` = #{content}
+ 			, `updatedAt` = NOW()
+ 		WHERE
+ 			`id` = #{postId}
+ 	</update>
+ 	
  </mapper>

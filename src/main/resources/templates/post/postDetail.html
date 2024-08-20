@@ -6,7 +6,6 @@
 	class="contents d-flex justify-content-center align-items-center">
 	<div class="w-50">
 		<h1>글 상세</h1>
-
 		<div class="card border rounded mt-3">
 			<!-- 글쓴이, 더보기(삭제) -->
 			<div class="p-2 d-flex justify-content-between">
@@ -79,7 +78,7 @@
 			<div class="modal-dialog modal-sm modal-dialog-centered">
 				<div class="modal-content text-center">
 		      		<div class="py-3">
-		      			<a th:href="|/post/post-update-view?postId=${postView.post.id}|" id="postUpdateBtn" th:data-post-id="${postView.post.id}">수정하기</a>
+		      			<a th:href="|/onePost/post-update-view?postId=${postView.post.id}|" id="postUpdateBtn" th:data-post-id="${postView.post.id}">수정하기</a>
 		      		</div>
 		      		<div class="py-3 border-top">
 		      			<a href="#" id="postDeleteBtn" class="text-danger">삭제하기</a>
@@ -181,7 +180,7 @@
 				//alert(postId);
 				
 				// 1개만 존재하는 modal을 재활용하기 위해 data-post-id를 심어놓는다.
-				$("#modal").data('post-id', postId); // setting
+				//$("#modal").data('post-id', postId); // setting
 				//($("#modal").data('post-id'));
 			
 			}); // 더보기 끝
