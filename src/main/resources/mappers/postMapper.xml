@@ -11,8 +11,8 @@
  			`post`
  	</select>
  	
- 	<!-- 게시물 목록 조회  최신순 -->
- 	<select id="selectPostList" resultType="com.community.post.domain.Post">
+ 	<!-- 게시물 목록 조회 페이지 -->
+ 	<select id="selectPostList" parameterType="map" resultType="com.community.post.domain.Post">
  		SELECT
  			`id`
 			,`userId`
@@ -22,8 +22,32 @@
 			,`updatedAt`
 		FROM
 			`post`
-		ORDER By
-			`id` DESC	
+		<where>
+			<if test="direction == 'next'">
+			<![CDATA[
+				`id` < #{standardId}
+			]]>
+				ORDER BY `id` DESC
+			</if>
+			<if test="direction == 'prev'">
+				<![CDATA[
+				`id` > #{standardId}
+			]]>
+			</if>
+		</where>
+			<if test="direction == null">
+				ORDER BY `id` DESC
+			</if>
+		LIMIT ${limit}
+ 	</select>
+ 	
+ 	<select id="selectPostIdAsSort" parameterType="String" resultType="int">
+ 		SELECT
+ 			`id`
+ 		FROM
+ 			`post`
+ 		ORDER BY `id` ${sort}
+ 		LIMIT 1
  	</select>
  	
  	<!-- 글 번호로 글 조회 -->
@@ -78,6 +102,8 @@
  			`id` = #{postId}
  	</update>
  	
+ 	
+ 	<!-- 최신순 인기순 -->
  	<select id="selectPostListByLikeRank" resultType="com.community.post.domain.Post">
     SELECT
         p.`id`,

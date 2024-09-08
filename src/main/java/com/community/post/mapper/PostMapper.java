@@ -13,7 +13,13 @@ public interface PostMapper {
 	
 	public List<Map<String,Object>> selectPostListTest();
 	
-	public List<Post> selectPostList();
+	public List<Post> selectPostList(
+			@Param("standardId") Integer standardId,
+			@Param("direction") String direction,
+			@Param("limit") int limit);
+			
+	
+	public int selectPostIdAsSort(String sort);
 	
 	public int insertPost(Post post);
 	
@@ -27,5 +33,6 @@ public interface PostMapper {
 			@Param("content") String content);
 	
 	public List<Post> selectPostListByLikeRank();
+
 }
 

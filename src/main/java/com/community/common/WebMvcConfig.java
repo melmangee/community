@@ -1,12 +1,28 @@
 package com.community.common;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.community.interceptor.PermissionIntercepter;
 
 @Configuration // 설정을 위한 Spring bean
 public class WebMvcConfig implements WebMvcConfigurer{
 
+	@Autowired
+	private PermissionIntercepter interceptor;
+	
+	// 인터셉터 설정
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry
+		.addInterceptor(interceptor)
+		.addPathPatterns("/**")
+		.excludePathPatterns("/error" , "/css/**", "/img/**", "/user/sign-out");
+	}
+	
 	// 이미지 path와 서버에 업로드 된 실제 이미지와 매핑 설정
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) { 

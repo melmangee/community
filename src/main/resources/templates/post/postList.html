@@ -6,11 +6,7 @@
       
 <section layout:fragment="content" class="contents d-flex justify-content-center">
 	<div class="w-100">
-		<div class="d-flex mt-5 w-50">
-			<button id="likePostBtn" type="button" class="form-control mr-3 bg-primary">인기순</button>
-			<button id="recentPostBtn" type="button" class="form-control bg-primary">최신순</button>	
-		</div>
-		<div class="d-flex justify-content-between align-items-center mt-4">
+		<div class="d-flex justify-content-between align-items-center mt-5">
 			<h1>글목록</h1>
 			<a id="writePlusBtn" href="/post/post-create-view"><h3>+</h3></a>	
 		</div>
@@ -23,37 +19,24 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="post, status : ${postList}">
-					<td th:text="${status.count}">1</td>
+				<tr th:each="post : ${postList}">
+					<td th:text="${post.id}">1</td>
 					<td><a th:href="|/onePost/post-detail-view?postId=${post.id}|" th:text="${post.subject}">1번글</a></td>
 				</tr>
 			</tbody>
 		</table>
 		
 		<!-- 페이징 -->
-		<div>
-		
+		<div class="text-center">
+			<a th:if="${prevId != 0}" th:href="|/post/post-list-view?prevId=${prevId}|" class="mr-5">&lt;&lt; 이전</a>
+			<a th:if="${nextId != 0}" th:href="|/post/post-list-view?nextId=${nextId}|">다음 &gt;&gt;</a>
 		</div>
-	</div>
+	</div>	
 </section>
 
 <th:block layout:fragment="script">
     <script>
 		$(document).ready(function() {
-			
-			// 인기순 버튼 클릭
-			$("#likePostBtn").on("click", function() {
-				let beforeUrl = window.location.href.split('?')[0]; // 쿼리 파라미터를 제거한 기본 URL
-                let newUrl = beforeUrl + '?orderby=likeRank'; // 새로운 쿼리 파라미터 추가
-                window.location.href = newUrl; // 새 URL로 이동
-			}); // 인기순 버튼 끝
-			
-			// 최신순 버튼 클릭
-			$("#recentPostBtn").on("click", function() {
-                let beforeUrl = window.location.href.split('?')[0]; // 쿼리 파라미터를 제거한 기본 URL
-                let newUrl = beforeUrl + '?orderby=recentRank'; // 새로운 쿼리 파라미터 추가
-                window.location.href = newUrl; // 새 URL로 이동
-            }); // 최신순 버튼 끝
 			
 		}); // ready 끝 
 			
