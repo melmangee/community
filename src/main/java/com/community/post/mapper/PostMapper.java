@@ -31,8 +31,6 @@ public interface PostMapper {
 			@Param("postId") int postId,
 			@Param("subject") String subject,
 			@Param("content") String content);
-	
-	public List<Post> selectPostListByLikeRank();
 
 }
 

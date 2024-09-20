@@ -177,6 +177,7 @@
 			// 더보기
 			$(".more-btn").on('click', function(e) {
 				let postId = $(this).data('post-id');
+				$("#modal2").data('post-id', postId); // postId를 모달에 저장
 				//alert(postId);
 				
 				// 1개만 존재하는 modal을 재활용하기 위해 data-post-id를 심어놓는다.
@@ -187,7 +188,7 @@
 			
 			$("#postDeleteBtn").on('click', function(e) {
 				e.preventDefault(); // a 태그 위로 올라감 방지
-				let postId = $("#modal").data("post-id");
+				let postId = $("#modal2").data("post-id"); // postId를 모달에 저장
 				//alert(postId);
 				
 				// 글 삭제

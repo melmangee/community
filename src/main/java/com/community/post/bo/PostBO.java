@@ -87,15 +87,6 @@ public class PostBO {
 	}
 
 	/**
-	 * 전체글 좋아요 순 조회
-	 * @return
-	 */
-	public List<Post> getPostListByLikeRank() {
-		return postMapper.selectPostListByLikeRank();
-	}
-	
-	
-	/**
 	 * 글 상세 글 번호로 글 조회
 	 * 
 	 * @param postId
